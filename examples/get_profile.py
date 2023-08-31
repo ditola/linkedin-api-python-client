@@ -5,7 +5,7 @@ The 3-legged member access token should include the 'r_liteprofile' scope, which
 is part of the Sign In With LinkedIn API product.
 """
 
-import os, sys
+import os, sys, json
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -29,7 +29,7 @@ restli_client = RestliClient()
 Basic usage to fetch current member profile
 """
 response = restli_client.get(resource_path=PROFILE_RESOURCE, access_token=ACCESS_TOKEN)
-print("Basic usage:", response.entity)
+print("Basic usage:", json.dumps(response.entity, indent=1))
 
 """
 Usage with field projections
@@ -39,7 +39,7 @@ response = restli_client.get(
     access_token=ACCESS_TOKEN,
     query_params={"fields": "id,firstName:(localized),lastName"},
 )
-print("\n\nUsage with field projections:", response.entity)
+print("\n\nUsage with field projections:", json.dumps(response.entity, indent=1))
 
 """
 Usage with decoration of displayImage
@@ -51,4 +51,4 @@ response = restli_client.get(
         "projection": "(id,firstName,lastName,profilePicture(displayImage~:playableStreams))"
     },
 )
-print("\n\nUsage with decoration:", response.entity)
+print("\n\nUsage with decoration:", json.dumps(response.entity, indent=1))
